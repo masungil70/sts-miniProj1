@@ -1,6 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +9,7 @@
 <body>
 <h1>
 	Hello world!
+</h1>
 	<a href="javascript:json1()" >json1 호출</a> <br/>
 	<a href="javascript:json2()" >json2 호출</a> <br/>
 	<a href="javascript:json3()" >json3 호출</a> <br/>
@@ -19,7 +19,12 @@
 	<a href="javascript:jsonPath()" >json/abc 호출</a> <br/>
 	<a href="javascript:json10()" >json10 호출(200)</a> <br/>
 	<a href="javascript:json11()" >json11 호출(500에러)</a> <br/>
-</h1>
+	<hr>
+	<a href="javascript:all()" >board/all 호출</a> <br/>
+	<a href="javascript:findBoard()" >board/findBoard 호출</a> <br/>
+	<a href="javascript:addBoard()" >board/addBoard 호출</a> <br/>
+	<a href="javascript:updateBoard()" >board/updateBoard 호출</a> <br/>
+	<a href="javascript:deleteBoard()" >board/deleteBoard 호출</a> <br/>
 
 <script type="text/javascript" src="<c:url value='/resources/js/common.js'/>"></script>
 <script>
@@ -71,6 +76,74 @@ function json11() {
 	})
 }
 
+function all(){
+	fetch("<c:url value='/board/all'/>", {
+		method:"GET",
+		headers : {"Content-type" : "application/json; charset=utf-8"}
+	}).then(res => res.json())
+	.then(json => {
+		//서버로 부터 받은 결과를 사용해서 처리 루틴 구현  
+		console.log("all", json);
+	}).catch(error => {
+	    console.error(`error: ${error.message}`);
+	});
+}
+
+function findBoard(){
+	fetch("<c:url value='/board/1004'/>", {
+		method:"GET",
+		headers : {"Content-type" : "application/json; charset=utf-8"}
+	}).then(res => res.json())
+	.then(json => {
+		//서버로 부터 받은 결과를 사용해서 처리 루틴 구현  
+		console.log("findBoard", json);
+	}).catch(error => {
+	    console.error(`error: ${error.message}`);
+	});
+}
+
+function addBoard(){
+	const param = JSON.stringify({writer:"홍길동", title:"제목", content:"내용"});
+	fetch("<c:url value='/board'/>", {
+			method:"POST",
+			body : param,
+			headers : {"Content-type" : "application/json; charset=utf-8"}
+	}).then(res => res.text())
+	.then(text => {
+		//서버로 부터 받은 결과를 사용해서 처리 루틴 구현  
+		console.log("text", text );
+	}).catch(error => {
+	    console.error(`error: ${error.message}`);
+	});
+}
+
+function updateBoard(){
+	const param = JSON.stringify({bno:"1004", writer:"홍길동", title:"제목", content:"내용"});
+	fetch("<c:url value='/board/1004'/>", {
+			method:"PUT",
+			body : param,
+			headers : {"Content-type" : "application/json; charset=utf-8"}
+	}).then(res => res.text())
+	.then(text => {
+		//서버로 부터 받은 결과를 사용해서 처리 루틴 구현  
+		console.log("text", text );
+	}).catch(error => {
+	    console.error(`error: ${error.message}`);
+	});
+}
+
+function deleteBoard(){
+	fetch("<c:url value='/board/1004'/>", {
+			method:"DELETE",
+			headers : {"Content-type" : "application/json; charset=utf-8"}
+	}).then(res => res.text())
+	.then(text => {
+		//서버로 부터 받은 결과를 사용해서 처리 루틴 구현  
+		console.log("text", text );
+	}).catch(error => {
+	    console.error(`error: ${error.message}`);
+	});
+}
 
 </script>
 <P>  The time on the server is ${serverTime}. </P>
