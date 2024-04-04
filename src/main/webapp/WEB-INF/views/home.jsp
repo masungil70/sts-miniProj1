@@ -10,6 +10,8 @@
 <h1>
 	Hello world!
 </h1>
+	<a href="<c:url value='/board/list'/>" >게시물 목록</a> <br/>
+
 	<a href="javascript:json1()" >json1 호출</a> <br/>
 	<a href="javascript:json2()" >json2 호출</a> <br/>
 	<a href="javascript:json3()" >json3 호출</a> <br/>

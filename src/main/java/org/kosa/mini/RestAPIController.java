@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
-@RequestMapping("/board")
+@RequestMapping("/rest_board")
 public class RestAPIController {
 	
 	@GetMapping("/all")
