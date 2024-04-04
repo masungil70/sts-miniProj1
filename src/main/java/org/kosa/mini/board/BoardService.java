@@ -37,6 +37,7 @@ public class BoardService  {
 	public int delete(BoardVO board) throws ServletException, IOException {
 		return boardMapper.delete(board);
 	}
+
 //	
 //	public BoardVO updateForm(BoardVO board) throws ServletException, IOException {
 //		return boardDAO.read(board);

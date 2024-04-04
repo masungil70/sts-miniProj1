@@ -38,7 +38,6 @@
 	<h1>게시물목록</h1>
 	<h3>로그인 : ${loginVO.username} </h3>
     <form id="searchForm" action="board.do" method="post" >
-    	<input type="hidden" id="action" name="action" value="list">
     	<label>제목</label>
     	<input type="text" id="searchKey" name="searchKey" value="${param.searchKey}">
     	<input type="submit" value="검색">

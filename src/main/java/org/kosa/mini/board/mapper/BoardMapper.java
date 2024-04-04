@@ -9,5 +9,7 @@ public interface BoardMapper {
 	List<BoardVO> list(BoardVO boardVO);
 	BoardVO read(BoardVO boardVO);
 	int delete(BoardVO boardVO);
+	void allDelete();
+	void insert(BoardVO boardVO);
 
 }

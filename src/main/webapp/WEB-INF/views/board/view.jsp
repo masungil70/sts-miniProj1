@@ -9,13 +9,6 @@
     <meta charset="UTF-8">
     <title>게시물 상세보기</title>
     <style>
-        label {
-            display: inline-block;
-            width: 200px;
-        }
-        input {
-            margin-bottom: 10px; 
-        }
     </style>
 </head>
 <body>
