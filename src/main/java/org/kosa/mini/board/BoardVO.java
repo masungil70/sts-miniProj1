@@ -19,7 +19,4 @@ public class BoardVO {
 	private String bViewCount;
 	private String bwriter;
 	
-	//검색키
-	private String searchKey;
-
 }
