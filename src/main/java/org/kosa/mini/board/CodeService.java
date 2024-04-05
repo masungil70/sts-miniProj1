@@ -1,0 +1,40 @@
+package org.kosa.mini.board;
+
+import java.util.List;
+
+import org.kosa.mini.board.mapper.BoardMapper;
+import org.kosa.mini.board.mapper.CodeMapper;
+import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+/*
+ * MVC 
+ * Model : B/L 로직을 구현하는 부분(service + dao)  
+ * View  : 출력(jsp) 
+ * Controller : model와 view에 대한 제어를 담당 
+ */
+@Service
+@Slf4j
+@RequiredArgsConstructor
+public class CodeService {
+	private static final long serialVersionUID = 1L;
+      
+	private final CodeMapper  codeMapper;
+
+    public List<CodeVO> getList() {
+    	return codeMapper.getList();
+	}
+}
+
+
+
+
+
+
+
+
+
+
+

@@ -27,6 +27,7 @@ public class BoardController {
 	//xml 또는 어노터이션 처리하면 스프링 
 	//어노터이션 처리하면 스프링 부트   
 	private final BoardService boardService;
+	private final CodeService codeService;
 
 	@RequestMapping("list")
 	public String list(@Valid PageRequestVO pageRequestVO, BindingResult bindingResult, Model model) throws ServletException, IOException {
@@ -40,6 +41,9 @@ public class BoardController {
         
 		//2. jsp출력할 값 설정
 		model.addAttribute("pageResponseVO", boardService.getList(pageRequestVO));
+		//model.addAttribute("sizes", new int[] {10, 20, 50, 100});
+		model.addAttribute("sizes", codeService.getList());
+//		model.addAttribute("sizes", "10,20,50,100");
 		
 		return "board/list";
 	}
