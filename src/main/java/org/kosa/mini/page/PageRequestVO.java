@@ -1,4 +1,4 @@
-package org.kosa.mini.board;
+package org.kosa.mini.page;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

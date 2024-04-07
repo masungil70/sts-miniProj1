@@ -12,15 +12,16 @@
 			<!-- DataSource 설정 -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	    <property name="driverClassName" value="org.mariadb.jdbc.Driver" />
-	    <property name="url" value="jdbc:mariadb://localhost:3306/mini_proj_db" />
+	    <property name="url" value="jdbc:mariadb://localhost:53306/miniproj_db" />
 <!-- 	    <property name="url" value="jdbc:mariadb://localhost:3306/mini_proj_db" /> -->
-	    <property name="username" value="bituser" />
-	    <property name="password" value="1004" />
+	    <property name="username" value="root" />
+	    <property name="password" value="70sungil" />
 	</bean>
 		
 	<!-- SessionFactory에 dataSourde, Bean 객체의 별명 설정, xml 파일의 위치 설정  -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 	    <property name="dataSource" ref="dataSource" />
+	    <property name="typeAliasesPackage" value="org.kosa.mini.entity"/>
 		<property name="mapperLocations" value="classpath:/mappers/**/*.xml" />
 	</bean>
 	 <!-- SqlSesionTemplate 클래스 설정  -->

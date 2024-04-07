@@ -7,6 +7,9 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.validation.Valid;
 
+import org.kosa.mini.code.CodeService;
+import org.kosa.mini.entity.BoardVO;
+import org.kosa.mini.page.PageRequestVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

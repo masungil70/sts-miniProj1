@@ -2,7 +2,9 @@ package org.kosa.mini.board;
 
 import java.util.List;
 
-import org.kosa.mini.board.mapper.BoardMapper;
+import org.kosa.mini.entity.BoardVO;
+import org.kosa.mini.page.PageRequestVO;
+import org.kosa.mini.page.PageResponseVO;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;

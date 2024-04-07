@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.kosa.mini.board.mapper.BoardMapper">
+<mapper namespace="org.kosa.mini.board.BoardMapper">
 
     <sql id="search">
         <where>
@@ -13,7 +13,7 @@
     </sql>
 
 
-    <select id="getList" resultType="org.kosa.mini.board.BoardVO">
+    <select id="getList" resultType="BoardVO">
 		select 
 			b.*, m.member_name bwriter  
 		from tb_board b inner join tb_member m on b.member_id = m.member_id
@@ -28,7 +28,7 @@
 		<include refid="search"/>
     </select>
     
-	<select id="view" resultType="org.kosa.mini.board.BoardVO">
+	<select id="view" resultType="BoardVO">
 		select 
 			b.*, m.member_name bwriter  
 		from tb_board b inner join tb_member m on b.member_id = m.member_id  

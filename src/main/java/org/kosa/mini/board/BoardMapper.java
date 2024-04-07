@@ -1,10 +1,10 @@
-package org.kosa.mini.board.mapper;
+package org.kosa.mini.board;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.kosa.mini.board.BoardVO;
-import org.kosa.mini.board.PageRequestVO;
+import org.kosa.mini.entity.BoardVO;
+import org.kosa.mini.page.PageRequestVO;
 
 @Mapper
 public interface BoardMapper {
