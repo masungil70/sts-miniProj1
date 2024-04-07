@@ -66,10 +66,10 @@ public class BoardService {
 	public int update(BoardVO board) {
 		return boardMapper.update(board);
 	}
-//	
-//	public int insert(BoardVO board)  {
-//		return boardDAO.insert(board);
-//	}
+	
+	public int insert(BoardVO board)  {
+		return boardMapper.insert(board);
+	}
 	
 }
 

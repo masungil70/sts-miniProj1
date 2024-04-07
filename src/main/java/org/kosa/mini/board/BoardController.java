@@ -1,14 +1,17 @@
 package org.kosa.mini.board;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.kosa.mini.code.CodeService;
 import org.kosa.mini.entity.BoardVO;
+import org.kosa.mini.entity.MemberVO;
 import org.kosa.mini.page.PageRequestVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +28,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @RequestMapping("/board")
 public class BoardController {
-	private static final long serialVersionUID = 1L;
 
 	//xml 또는 어노터이션 처리하면 스프링 
 	//어노터이션 처리하면 스프링 부트   
@@ -114,32 +116,32 @@ public class BoardController {
 		//2. jsp출력할 값 설정
 		return "board/insertForm";
 	}
-//	
-//	public Object insert(HttpServletRequest request, BoardVO board) throws ServletException, IOException {
-//		System.out.println("등록");
-//		Map<String, Object> map = new HashMap<>();
-//		
-//		//전처리로 세션정보를 얻는다
-//		HttpSession session = request.getSession();
-//		System.out.println("게시물등록시 sessionId = " + session.getId());
-//		//로그인 사용자 설정 
-//		UserVO loginVO = (UserVO) session.getAttribute("loginVO");
-//		if (loginVO != null) {
-//			//로그인한 사용자를 게시물 작성자로 설정한다 
-//			board.setBwriter(loginVO.getUsername());
-//		}
-//		
-//		//1. 처리
-//		int updated = boardService.insert(board);
-//		
-//		if (updated == 1) { //성공
-//			map.put("status", 0);
-//		} else {
-//			map.put("status", -99);
-//			map.put("statusMessage", "회원 가입이 실패하였습니다");
-//		}
-//		return map;
-//	}
+	
+	@RequestMapping("insert")
+	@ResponseBody
+	public Object insert(@RequestBody BoardVO boardVO, HttpSession session) throws ServletException, IOException {
+		log.info("등록 {}", boardVO);
+		Map<String, Object> map = new HashMap<>();
+		map.put("status", -99);
+		map.put("statusMessage", "회원 가입이 실패하였습니다");
+		
+		//전처리로 세션정보를 얻는다
+		log.info("게시물등록시 sessionId = " + session.getId());
+		//로그인 사용자 설정 
+		MemberVO loginVO = (MemberVO) session.getAttribute("loginVO");
+		if (loginVO != null) {
+			//로그인한 사용자를 게시물 작성자로 설정한다 
+			boardVO.setMember_id(loginVO.getMember_id());
+			int updated = boardService.insert(boardVO);
+			if (updated == 1) { //성공
+				map.put("status", 0);
+			}
+		} else {
+			map.put("status", -98);
+			map.put("statusMessage", "로그인 정보가 존재하지 않습니다");
+		}
+		return map;
+	}
 	
 }
 

@@ -33,11 +33,13 @@
     	e.preventDefault();
     	
 		myFetch("insert", "rForm", json => {
-			if(json.status == 0) {
+			switch(json.status) {
+			case 0:
 				//성공
 				alert("게시물을 등록 하였습니다");
 				location = "list";
-			} else {
+				break;
+			default:
 				alert(json.statusMessage);
 			}
 		});
