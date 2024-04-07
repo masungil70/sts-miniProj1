@@ -39,7 +39,7 @@
 </head>
 <body>
 	<h1>게시물목록</h1>
-	<h3>로그인 : ${loginVO.username} </h3>
+	<h3>로그인 : ${loginVO.member_name} </h3>
     <form id="searchForm" action="list" method="post" >
         <!--  input type="hidden" id="size" name="size" value="${pageRequestVO.size}" -->
         <!-- 
