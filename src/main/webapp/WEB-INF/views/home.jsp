@@ -10,6 +10,7 @@
 <h1>
 	Hello world!
 </h1>
+	<a href="<c:url value='/member/loginForm'/>" >로그인 양식</a> <br/>
 	<a href="<c:url value='/board/list'/>" >게시물 목록</a> <br/>
 
 	<a href="javascript:json1()" >json1 호출</a> <br/>
