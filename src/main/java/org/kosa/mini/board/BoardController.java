@@ -77,17 +77,16 @@ public class BoardController {
 		
 		return map;
 	}
-//	
-//	public Object updateForm(HttpServletRequest request, BoardVO board) throws ServletException, IOException {
-//		System.out.println("수정화면");
-//		//1. 처리
-//		//boardsDAO.read(board);
-//		
-//		//2. jsp출력할 값 설정
-//		request.setAttribute("board", boardService.updateForm(board));
-//		
-//		return "updateForm"; 
-//	}
+	
+	@RequestMapping("updateForm")
+	public Object updateForm(BoardVO board, Model model) throws ServletException, IOException {
+		System.out.println("수정화면");
+		
+		//2. jsp출력할 값 설정
+		model.addAttribute("board", boardService.updateForm(board));
+		
+		return "board/updateForm"; 
+	}
 //	
 //	public Object update(HttpServletRequest request, BoardVO board) throws ServletException, IOException {
 //		System.out.println("수정");

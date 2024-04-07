@@ -42,7 +42,7 @@ function jsDelete() {
 function jsUpdateForm() {
 	if (confirm("정말로 수정하시겠습니까?")) {
 		//서버의 URL을 설정한다 
-		action.value = "updateForm";
+		viewForm.action = "updateForm";
 	
 		//서버의 URL로 전송한다 
 		viewForm.submit();
@@ -50,17 +50,16 @@ function jsUpdateForm() {
 }
 </script>
 <!-- 두개의 폼을 하나로 합치는 방법 , js를 사용하여 처리  -->
-	<form id="viewForm" method="post" action="board.do">
-		<input type="hidden" id="action" name="action" value="">
+	<form id="viewForm" method="post" action="view">
 		<input type="hidden" name="bno" value="${board.bno}">
 		<input type="button" value="삭제" onclick="jsDelete()">
 		<input type="button" value="수정" onclick="jsUpdateForm()">
 	</form>     
  
     <div>
-        <a href="board.do?action=list">목록</a>
-        <a href="board.do?action=updateForm&bno=${board.bno}">수정</a>
-        <a href="board.do?action=delete&bno=${board.bno}">삭제</a>
+        <a href="list">목록</a>
+        <a href="updateForm&bno=${board.bno}">수정</a>
+        <a href="delete&bno=${board.bno}">삭제</a>
     </div>
 </body>
 </html>

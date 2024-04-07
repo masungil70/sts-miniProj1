@@ -58,10 +58,11 @@ public class BoardService {
 		return boardMapper.delete(board);
 	}
 
-//	
-//	public BoardVO updateForm(BoardVO board)  {
-//		return boardDAO.read(board);
-//	}
+	
+	public BoardVO updateForm(BoardVO board)  {
+		return boardMapper.view(board);
+	}
+	
 //	
 //	public int update(BoardVO board) {
 //		return boardDAO.update(board);
