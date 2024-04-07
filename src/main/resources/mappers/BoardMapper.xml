@@ -63,6 +63,13 @@ ENGINE=InnoDB
 		from tb_board 
 		where bno = #{bno}
 	</delete>
+	
+	<update id="update" >
+		update tb_board set
+			btitle   = #{btitle},
+			bcontent = #{bcontent}
+		where bno = #{bno}
+	</update>
 
 	<delete id="allDelete" >
 		delete 

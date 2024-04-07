@@ -14,6 +14,7 @@ public interface BoardMapper {
 	BoardVO view(BoardVO boardVO);
 	int incViewCount(BoardVO boardVO);
 	int delete(BoardVO boardVO);
+	int update(BoardVO boardVO);
 	void allDelete();
 	void insert(BoardVO boardVO);
 

@@ -63,10 +63,9 @@ public class BoardService {
 		return boardMapper.view(board);
 	}
 	
-//	
-//	public int update(BoardVO board) {
-//		return boardDAO.update(board);
-//	}
+	public int update(BoardVO board) {
+		return boardMapper.update(board);
+	}
 //	
 //	public int insert(BoardVO board)  {
 //		return boardDAO.insert(board);

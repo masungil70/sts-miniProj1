@@ -87,23 +87,25 @@ public class BoardController {
 		
 		return "board/updateForm"; 
 	}
-//	
-//	public Object update(HttpServletRequest request, BoardVO board) throws ServletException, IOException {
-//		System.out.println("수정");
-//		
-//		//1. 처리
-//		int updated = boardService.update(board);
-//		
-//		Map<String, Object> map = new HashMap<>();
-//		if (updated == 1) { //성공
-//			map.put("status", 0);
-//		} else {
-//			map.put("status", -99);
-//			map.put("statusMessage", "게시물 정보 수정 실패하였습니다");
-//		}
-//		
-//		return map;
-//	}
+
+	@RequestMapping("update")
+	@ResponseBody
+	public Map<String, Object>  update(@RequestBody BoardVO board) throws ServletException, IOException {
+		log.info("수정 board => {}", board);
+		
+		//1. 처리
+		int updated = boardService.update(board);
+		
+		Map<String, Object> map = new HashMap<>();
+		if (updated == 1) { //성공
+			map.put("status", 0);
+		} else {
+			map.put("status", -99);
+			map.put("statusMessage", "게시물 정보 수정 실패하였습니다");
+		}
+		
+		return map;
+	}
 //	
 //	public Object insertForm(HttpServletRequest request) throws ServletException, IOException {
 //		System.out.println("등록화면");

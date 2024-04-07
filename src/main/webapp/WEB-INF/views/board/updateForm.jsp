@@ -21,7 +21,7 @@
 	    </div>
     
     </form>
-<script type="text/javascript" src="<c:url value='/js/common.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/common.js'/>"></script>
 
 <script type="text/javascript">
 	
@@ -34,7 +34,7 @@ rForm.addEventListener("submit", e => {
 		if(json.status == 0) {
 			//성공
 			alert("게시물 정보 수정을 성공 하였습니다");
-			location = "view&bno=" + bno.value;
+			location = "view?bno=" + bno.value;
 		} else {
 			alert(json.statusMessage);
 		}
