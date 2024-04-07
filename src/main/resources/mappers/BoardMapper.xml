@@ -3,6 +3,23 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.kosa.mini.board.BoardMapper">
+<!-- 
+테이블 스크립트   
+CREATE TABLE `tb_board` (
+	`bno` INT(11) NOT NULL AUTO_INCREMENT,
+	`btitle` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`bcontent` TEXT NOT NULL COLLATE 'utf8mb4_general_ci',
+	`member_id` VARCHAR(100) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`bdate` DATETIME NOT NULL DEFAULT current_timestamp(),
+	`view_count` INT(11) NULL DEFAULT '0',
+	PRIMARY KEY (`bno`) USING BTREE,
+	INDEX `memberid` (`member_id`) USING BTREE
+)
+ENGINE=InnoDB
+;
+
+
+ -->
 
     <sql id="search">
         <where>
@@ -34,6 +51,12 @@
 		from tb_board b inner join tb_member m on b.member_id = m.member_id  
 		where bno = #{bno}
 	</select>
+	
+	<update id="incViewCount" >
+		update tb_board set
+			 view_count = view_count + 1
+		where bno = #{bno}
+	</update>
 	
 	<delete id="delete" >
 		delete 

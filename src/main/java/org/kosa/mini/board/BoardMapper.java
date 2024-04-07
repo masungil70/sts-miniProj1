@@ -12,6 +12,7 @@ public interface BoardMapper {
 	List<BoardVO> getList(PageRequestVO pageRequestVO);
 	int  getTotalCount(PageRequestVO pageRequestVO);
 	BoardVO view(BoardVO boardVO);
+	int incViewCount(BoardVO boardVO);
 	int delete(BoardVO boardVO);
 	void allDelete();
 	void insert(BoardVO boardVO);

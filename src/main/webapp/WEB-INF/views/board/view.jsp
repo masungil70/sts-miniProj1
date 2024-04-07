@@ -19,6 +19,7 @@
       <label>게시물 번호: ${board.bno}</label> <br/>
       <label>제목 : ${board.btitle}</label><br/>
       <label>내용 : ${board.bcontent}</label><br/>
+      <label>ViewCount : ${board.view_count}</label><br/>
       <label>작성자 : ${board.bwriter}</label><br/>
       <label>작성일 : ${board.bdate}</label><br/>
 
