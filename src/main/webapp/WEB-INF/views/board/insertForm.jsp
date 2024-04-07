@@ -2,12 +2,16 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="kr">
 <head>
     <meta charset="UTF-8">
     <title>등록화면</title>
+    <%@ include file="/WEB-INF/views/include/css.jsp" %>
+    <%@ include file="/WEB-INF/views/include/js.jsp" %>
 </head>
 <body>
+    <%@ include file="/WEB-INF/views/include/header.jsp" %>
+    
     <h1>
         게시물 등록양식 
     </h1>
@@ -23,10 +27,9 @@
     
     </form>
     
-<script type="text/javascript" src="<c:url value='/resources/js/common.js'/>"></script>
-    
 <script type="text/javascript">
-    
+menuActive("board_link");
+
     const rForm = document.getElementById("rForm");
     rForm.addEventListener("submit", e => {
     	//서버에 form data를 전송하지 않는다 
@@ -46,6 +49,6 @@
     });
     
 </script>
-        
+<%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </body>
 </html>

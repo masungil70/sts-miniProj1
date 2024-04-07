@@ -5,8 +5,11 @@
 <head>
 <meta charset="UTF-8">
 	<title>Home</title>
+    <%@ include file="/WEB-INF/views/include/css.jsp" %>
+    <%@ include file="/WEB-INF/views/include/js.jsp" %>
 </head>
 <body>
+    <%@ include file="/WEB-INF/views/include/header.jsp" %>
 <h1>
 	Hello world!
 </h1>
@@ -29,8 +32,10 @@
 	<a href="javascript:updateBoard()" >board/updateBoard 호출</a> <br/>
 	<a href="javascript:deleteBoard()" >board/deleteBoard 호출</a> <br/>
 
-<script type="text/javascript" src="<c:url value='/resources/js/common.js'/>"></script>
 <script>
+//회사 홈 페이지
+menuActive("home_link");
+
 function json1() {
 	myFetch("<c:url value='/json1'/>", {}, json => {
 		console.log("json1->", json);
@@ -150,5 +155,6 @@ function deleteBoard(){
 
 </script>
 <P>  The time on the server is ${serverTime}. </P>
+<%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </body>
 </html>

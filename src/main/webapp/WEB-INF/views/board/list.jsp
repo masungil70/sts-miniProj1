@@ -7,56 +7,16 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>게시물 목록</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        tr:hover {
-            background-color: #f5f5f5;
-        }
-        .button-container {
-            margin-top: 20px;
-        }
-        .button-container button {
-            padding: 10px 20px;
-            font-size: 16px; 
-            background-color: #f5f5f5;
-        }
-    </style>
+    <%@ include file="/WEB-INF/views/include/css.jsp" %>
+    <%@ include file="/WEB-INF/views/include/js.jsp" %>
+</head>
+<body>
+    <%@ include file="/WEB-INF/views/include/header.jsp" %>
 </head>
 <body>
 	<h1>게시물목록</h1>
 	<h3>로그인 : ${loginVO.member_name} </h3>
     <form id="searchForm" action="list" method="post" >
-        <!--  input type="hidden" id="size" name="size" value="${pageRequestVO.size}" -->
-        <!-- 
-        <select name="size" >
-        	<option value="10" ${pageRequestVO.size == 10 ? 'selected' : ''}>10</option>
-        	<option value="20" ${pageRequestVO.size == 20 ? 'selected' : ''}>20</option>
-        	<option value="50" ${pageRequestVO.size == 50 ? 'selected' : ''}>50</option>
-        	<option value="100" ${pageRequestVO.size == 100 ? 'selected' : ''}>100</option>
-        </select>
-         -->
-         <%--  
-        <select id="size" name="size" >
-        	<c:forEach var="size" items="${sizes}">
-        		<option value="${size}" ${pageRequestVO.size == size ? 'selected' : ''} >${size}</option>
-        	</c:forEach>
-        </select>
-         --%>
         <select id="size" name="size" >
         	<c:forEach var="size" items="${sizes}">
         		<option value="${size.codeid}" ${pageRequestVO.size == size.codeid ? 'selected' : ''} >${size.name}</option>
@@ -112,6 +72,7 @@
     </div>
     
 <script>
+menuActive("board_link");
 
 document.querySelector(".pagination").addEventListener("click", function (e) {
     e.preventDefault()
@@ -147,6 +108,7 @@ function jsView(bno) {
     <div class="button-container">
         <a href="insertForm">등록</a>
     </div>
+<%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </body>
 </html>
 

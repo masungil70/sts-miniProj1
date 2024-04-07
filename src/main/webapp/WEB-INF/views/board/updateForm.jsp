@@ -6,8 +6,11 @@
 <head>
     <meta charset="UTF-8">
     <title>수정화면</title>
+    <%@ include file="/WEB-INF/views/include/css.jsp" %>
+    <%@ include file="/WEB-INF/views/include/js.jsp" %>
 </head>
 <body>
+    <%@ include file="/WEB-INF/views/include/header.jsp" %>
     <h1>
         게시물 수정 수정양식 
     </h1>
@@ -21,10 +24,10 @@
 	    </div>
     
     </form>
-<script type="text/javascript" src="<c:url value='/resources/js/common.js'/>"></script>
 
 <script type="text/javascript">
-	
+menuActive("board_link");
+
 const rForm = document.getElementById("rForm");
 rForm.addEventListener("submit", e => {
 	//서버에 form data를 전송하지 않는다 
@@ -42,6 +45,6 @@ rForm.addEventListener("submit", e => {
 });
 
 </script>    
-    
+<%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </body>
 </html>

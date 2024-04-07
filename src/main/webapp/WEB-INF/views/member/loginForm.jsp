@@ -6,8 +6,11 @@
 <head>
     <meta charset="UTF-8">
     <title>로그인</title>
+    <%@ include file="/WEB-INF/views/include/css.jsp" %>
+    <%@ include file="/WEB-INF/views/include/js.jsp" %>
 </head>
 <body>
+    <%@ include file="/WEB-INF/views/include/header.jsp" %>
     <h1>
         로그인 
     </h1>
@@ -21,12 +24,11 @@
     
     </form>
 
-<script type="text/javascript" src="<c:url value='/resources/js/common.js'/>"></script>
 <script type="text/javascript">
 	
 const rForm = document.getElementById("rForm");
 rForm.addEventListener("submit", e => {
-	//서버에 form data를 전송하지 않는다 
+	//서버에 form data를 전송하지 않는 
 	e.preventDefault();
 	
 	myFetch("login", "rForm", json => {
@@ -43,6 +45,6 @@ rForm.addEventListener("submit", e => {
 });
 
 </script>    
-    
+<%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </body>
 </html>

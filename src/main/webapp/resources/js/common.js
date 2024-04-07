@@ -54,3 +54,10 @@ const myFetch = (url, formId, handler) => {
 	});	
 }
 
+
+
+const menuActive = link_id => {
+	document.querySelector("#" + link_id).classList.add("active");
+}
+
+console.log(location.pathname)

@@ -8,10 +8,12 @@
 <head>
     <meta charset="UTF-8">
     <title>게시물 상세보기</title>
-    <style>
-    </style>
+    <%@ include file="/WEB-INF/views/include/css.jsp" %>
+    <%@ include file="/WEB-INF/views/include/js.jsp" %>
 </head>
 <body>
+    <%@ include file="/WEB-INF/views/include/header.jsp" %>
+
     <h1>
         게시물 상세보기
     </h1>
@@ -23,8 +25,9 @@
       <label>작성자 : ${board.bwriter}</label><br/>
       <label>작성일 : ${board.bdate}</label><br/>
 
-<script type="text/javascript" src="<c:url value='/resources/js/common.js'/>"></script>
 <script>
+menuActive("board_link");
+
 function jsDelete() {
 	if (confirm("정말로 삭제하시겠습니까?")) {
 		myFetch("delete", "viewForm", json => {
@@ -61,6 +64,7 @@ function jsUpdateForm() {
         <a href="updateForm&bno=${board.bno}">수정</a>
         <a href="delete&bno=${board.bno}">삭제</a>
     </div>
+<%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </body>
 </html>
 
