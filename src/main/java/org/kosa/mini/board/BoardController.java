@@ -62,6 +62,25 @@ public class BoardController {
 		return "board/view";
 	}
 
+	@RequestMapping("jsonBoardInfo")
+	@ResponseBody
+	public Map<String, Object> jsonBoardInfo(@RequestBody BoardVO board) throws ServletException, IOException {
+		log.info("json 상세보기 -> {}", board);
+		//1. 처리
+		BoardVO resultVO = boardService.view(board);
+		
+		Map<String, Object> map = new HashMap<>();
+		if (resultVO != null) { //성공
+			map.put("status", 0);
+			map.put("jsonBoard", resultVO);
+		} else {
+			map.put("status", -99);
+			map.put("statusMessage", "게시물 정보 존재하지 않습니다");
+		}
+		
+		return map;
+	}
+	
 	@RequestMapping("delete")
 	@ResponseBody
 	public Map<String, Object> delete(@RequestBody BoardVO board) throws ServletException, IOException {

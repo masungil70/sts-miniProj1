@@ -7,6 +7,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%@ include file="/WEB-INF/views/include/css.jsp" %>
     <%@ include file="/WEB-INF/views/include/js.jsp" %>
 </head>
@@ -27,10 +28,6 @@
     	<input type="submit" value="검색">
     </form>
     
-    <form id="listForm" action="view" method="post">
-    	<input type="hidden" id="bno" name="bno" >
-    </form>
-   
     <table border="1">
         <tr>
             <th>게시물번호</th>
@@ -40,8 +37,8 @@
         </tr>
         <c:forEach var="board" items="${pageResponseVO.list}">
         <tr>
-            <td onclick="jsView('${board.bno}')"  style="cursor:pointer;">${board.bno}</td>
-            <td><a href="view?bno=${board.bno}">${board.btitle}</a></td>
+            <td style="cursor:pointer;"><a data-bs-toggle="modal" data-bs-target="#boardViewModel" data-bs-bno="${board.bno}">${board.bno}</a></td>
+            <td>${board.btitle}</td>
             <td>${board.bwriter}</td>
             <td>${board.bdate}</td>
         </tr>
@@ -71,8 +68,32 @@
 
     </div>
     
+<!-- 상세보기 Modal -->
+<div class="modal fade" id="boardViewModel" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">게시물 상세보기</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+	      <label>게시물 번호:</label><span id="bno"></span><br/>
+	      <label>제목 : </label><span id="btitle"></span><br/>
+	      <label>내용 : </label><span id="bcontent"></span><br/>
+	      <label>ViewCount :</label><span id="view_count"></span><br/>
+	      <label>작성자 : </label><span id="bwriter"></span><br/>
+	      <label>작성일 : </label><span id="bdate"></span><br/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+      </div>
+    </div>
+  </div>
+</div>
+    
 <script>
 menuActive("board_link");
+
 
 document.querySelector(".pagination").addEventListener("click", function (e) {
     e.preventDefault()
@@ -96,13 +117,52 @@ document.querySelector("#size").addEventListener("change", e => {
     searchForm.submit();
 });
 
+const boardViewModel = document.querySelector("#boardViewModel");
+const span_bno = document.querySelector(".modal-body #bno");
+const span_btitle = document.querySelector(".modal-body #btitle");
+const span_bcontent = document.querySelector(".modal-body #bcontent");
+const span_view_count = document.querySelector(".modal-body #view_count");
+const span_bwriter = document.querySelector(".modal-body #bwriter");
+const span_bdate = document.querySelector(".modal-body #bdate");
+
+boardViewModel.addEventListener('shown.bs.modal', function (event) {
+	const a = event.relatedTarget;
+	const bno = a.getAttribute('data-bs-bno'); //a.dataset["bs-bno"] //, a.dataset.bs-bno 사용안됨
+	console.log("모달 대화 상자 출력... bno ", bno);
+	
+	span_bno.innerText = "";
+	span_btitle.innerText = "";
+	span_bcontent.innerText = "";
+	span_view_count.innerText = "";
+	span_bwriter.innerText = "";
+	span_bdate.innerText = "";
+
+	myFetch("jsonBoardInfo", { bno : bno }, json => {
+		if(json.status == 0) {
+			//성공
+			const jsonBoard = json.jsonBoard; 
+			span_bno.innerText = jsonBoard.bno;
+			span_btitle.innerText = jsonBoard.btitle;
+			span_bcontent.innerText = jsonBoard.bcontent;
+			span_view_count.innerText = jsonBoard.view_count;
+			span_bwriter.innerText = jsonBoard.bwriter;
+			span_bdate.innerText = jsonBoard.bdate;
+			
+		} else {
+			alert(json.statusMessage);
+		}
+	});
+
+})
+	
 function jsView(bno) {
 	//인자의 값을 설정한다 
-	bno.value = bno;
+//	bno.value = bno;
 	
 	//양식을 통해서 서버의 URL로 값을 전달한다
-	listForm.submit();
-	
+//	listForm.submit();
+//	.Modal("#boardViewModel").model();
+//	boardViewModel.show();
 }
 </script>      
     <div class="button-container">

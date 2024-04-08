@@ -25,7 +25,8 @@
     </form>
 
 <script type="text/javascript">
-	
+menuActive("login_link");
+
 const rForm = document.getElementById("rForm");
 rForm.addEventListener("submit", e => {
 	//서버에 form data를 전송하지 않는 
