@@ -2,56 +2,92 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.kosa.mini.board.BoardFileMapper">
+<mapper namespace="org.kosa.mini.board.BoardMapper">
 <!-- 
 테이블 스크립트   
-CREATE TABLE `tb_board_file` (
-	`board_file_id` INT(11) NOT NULL AUTO_INCREMENT,
-	`bno` INT(11) NOT NULL ,
-	`original_filename` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
-	`real_filename` VARCHAR(800) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
-	`content_type` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
-	`size` BIGINT(20) NULL DEFAULT NULL,
-	`make_date` DATETIME NULL DEFAULT current_timestamp(),
-	PRIMARY KEY (`board_file_id`) USING BTREE
+CREATE TABLE `tb_board` (
+	`bno` INT(11) NOT NULL AUTO_INCREMENT,
+	`btitle` VARCHAR(255) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`bcontent` TEXT NOT NULL COLLATE 'utf8mb4_general_ci',
+	`member_id` VARCHAR(100) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`bdate` DATETIME NOT NULL DEFAULT current_timestamp(),
+	`view_count` INT(11) NULL DEFAULT '0',
+	PRIMARY KEY (`bno`) USING BTREE,
+	INDEX `memberid` (`member_id`) USING BTREE
 )
 ENGINE=InnoDB
 ;
+
+
  -->
-    <select id="getList" resultType="BoardFileVO">
+
+    <sql id="search">
+        <where>
+            <if test="searchKey != null and searchKey != ''">
+                btitle like concat('%', #{searchKey}, '%')
+            </if>
+        </where>
+    </sql>
+
+
+    <select id="getList" resultType="BoardVO">
 		select 
-			*  
-		from tb_board_file
-		where bno = #{bno}
-		order by board_file_id
+			b.*, m.member_name bwriter  
+		from tb_board b inner join tb_member m on b.member_id = m.member_id
+		<include refid="search"/>
+		order by bno desc limit #{skip}, #{size}
     </select>
 
-	<select id="view" resultType="BoardFileVO">
+    <select id="getTotalCount" resultType="int">
 		select 
-			*  
-		from tb_board_file
-		where board_file_id = #{board_file_id}
+			count(*)   
+		from tb_board 
+		<include refid="search"/>
+    </select>
+    
+	<select id="view" resultType="BoardVO">
+		select 
+			b.*, m.member_name bwriter  
+		from tb_board b inner join tb_member m on b.member_id = m.member_id  
+		where bno = #{bno}
 	</select>
+	
+	<update id="incViewCount" >
+		update tb_board set
+			 view_count = view_count + 1
+		where bno = #{bno}
+	</update>
 	
 	<delete id="delete" >
 		delete 
-		from tb_board_file 
-		where board_file_id = #{board_file_id}
+		from tb_board 
+		where bno = #{bno}
+	</delete>
+	
+	<update id="update" >
+		update tb_board set
+			btitle   = #{btitle},
+			bcontent = #{bcontent}
+		where bno = #{bno}
+	</update>
+
+	<delete id="allDelete" >
+		delete 
+		from tb_board 
 	</delete>
 	
 	<insert id="insert" >
-		insert into board_file_id (
-			bno
-			,original_filename
-			,real_filename
-			,content_type
-			,size
+		<selectKey order="AFTER" keyProperty="bno" resultType="String">
+			select LAST_INSERT_ID()
+		</selectKey>
+		insert into tb_board (
+			btitle,
+			bcontent,
+			member_id
 		) values (
-			#{bno}
-			,#{original_filename}
-			,#{real_filename}
-			,#{content_type}
-			,#{size}
+			#{btitle},
+			#{bcontent},
+			#{member_id}
 		) 
 	</insert>
     
