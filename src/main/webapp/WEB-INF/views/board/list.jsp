@@ -150,7 +150,7 @@ boardViewModel.addEventListener('shown.bs.modal', function (event) {
 			const jsonBoard = json.jsonBoard; 
 			span_bno.innerText = jsonBoard.bno;
 			span_btitle.innerText = jsonBoard.btitle;
-			span_bcontent.innerText = jsonBoard.bcontent;
+			span_bcontent.innerHTML = jsonBoard.bcontent;
 			span_view_count.innerText = jsonBoard.view_count;
 			span_bwriter.innerText = jsonBoard.bwriter;
 			span_bdate.innerText = jsonBoard.bdate;
