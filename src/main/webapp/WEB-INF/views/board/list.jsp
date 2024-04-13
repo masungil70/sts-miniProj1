@@ -169,7 +169,9 @@ boardViewModel.addEventListener('shown.bs.modal', function (event) {
 })
 	
 const onBoardFileDownload = boardFile => {
-	alert("첨부파일 번호 = " + boardFile.getAttribute("data-board-file-no"));	
+	const board_file_no = boardFile.getAttribute("data-board-file-no");
+	alert("첨부파일 번호 = " + board_file_no);
+	location.href = "<c:url value='/board/fileDownload/'/>" + board_file_no;
 }
 
 function jsView(bno) {

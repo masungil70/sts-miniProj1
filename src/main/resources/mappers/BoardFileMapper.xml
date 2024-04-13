@@ -26,7 +26,7 @@ ENGINE=InnoDB
 		order by board_file_id
     </select>
 
-	<select id="view" resultType="BoardFileVO">
+	<select id="getBoardFile" resultType="BoardFileVO">
 		select 
 			*  
 		from tb_board_file

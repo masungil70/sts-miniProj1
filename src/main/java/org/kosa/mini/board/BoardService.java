@@ -133,6 +133,10 @@ public class BoardService {
 				.size(file.getSize())
 				.build();
 	}
+
+	public BoardFileVO getBoardFile(int board_file_no) {
+		return boardFileMapper.getBoardFile(board_file_no);
+	}
 }
 
 

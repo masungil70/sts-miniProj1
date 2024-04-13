@@ -11,7 +11,7 @@ import org.kosa.mini.page.PageRequestVO;
 public interface BoardFileMapper {
 
 	List<BoardFileVO> getList(BoardVO boardVO);
-	BoardFileVO view(BoardFileVO boardFileVO);
+	BoardFileVO getBoardFile(int board_file_no);
 	BoardFileVO getBoardFileVO(BoardVO boardVO);
 	int delete(BoardFileVO boardFileVO);
 	int insert(BoardFileVO boardFileVO);
