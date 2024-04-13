@@ -44,17 +44,18 @@
 	<%-- 로그인 사용자 정보 출력 --%>
 	<h3>로그인 : ${principal.member_name} </h3>
     
-    <form id="rForm" action="insert" method="post">
-		<%-- csrf 토큰 설정 --%>
-		<sec:csrfInput/>
+    <form id="rForm" action="insert" method="post" enctype="multipart/form-data">
         <input class="btitle" id="btitle" name="btitle" required="required" placeholder="게시물 제목을 입력해주세요"><br/>
         <textarea id="bcontent" name="bcontent" required="required" placeholder="게시물 내용을 입력해주세요">
         </textarea>
+		<div id="div_file">
+			<input  type='file' name='file' />
+		</div>
         <br/>
-    <div>
-        <input type="submit" value="등록">
-        <a href="javascript:history(-1)">취소</a>
-    </div>
+	    <div>
+	        <input type="submit" value="등록">
+	        <a href="javascript:history(-1)">취소</a>
+	    </div>
     
     </form>
     
@@ -79,7 +80,7 @@
     	//서버에 form data를 전송하지 않는다 
     	e.preventDefault();
     	
-		myFetch("insert", "rForm", json => {
+		myFileFetch("insert", "rForm", json => {
 			switch(json.status) {
 			case 0:
 				//성공

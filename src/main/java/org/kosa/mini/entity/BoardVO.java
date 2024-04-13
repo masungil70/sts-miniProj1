@@ -1,5 +1,7 @@
 package org.kosa.mini.entity;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,5 +20,8 @@ public class BoardVO {
 	private String bdate;
 	private String view_count;
 	private String bwriter;
+	
+	//첨부파일 
+	private MultipartFile file;
 	
 }

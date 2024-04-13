@@ -142,7 +142,7 @@ public class BoardController {
 	
 	@RequestMapping("insert")
 	@ResponseBody
-	public Object insert(@RequestBody BoardVO boardVO, Authentication authentication) throws ServletException, IOException {
+	public Object insert(BoardVO boardVO, Authentication authentication) throws ServletException, IOException {
 		MemberVO loginVO = (MemberVO)authentication.getPrincipal();
 		log.info("등록 BoardVO = {}\n loginVO = {}", boardVO, loginVO);
 		
