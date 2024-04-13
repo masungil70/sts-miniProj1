@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html lang="kr">
 <head>
-    <meta charset="UTF-8">
     <title>등록화면</title>
+    <%@ include file="/WEB-INF/views/include/meta.jsp" %>
     <%@ include file="/WEB-INF/views/include/css.jsp" %>
     <%@ include file="/WEB-INF/views/include/js.jsp" %>
 </head>
@@ -15,9 +16,12 @@
     <h1>
         게시물 등록양식 
     </h1>
-	<h3>로그인 : ${loginVO.member_name} </h3>
+	<%-- 로그인 사용자 정보 출력 --%>
+	<h3>로그인 : ${principal.member_name} </h3>
     
     <form id="rForm" action="insert" method="post">
+		<%-- csrf 토큰 설정 --%>
+		<sec:csrfInput/>
         <label>제목 : </label><input type="text" id="btitle" name="btitle" required="required"><br/>
         <label>내용 : </label><input type="text" id="bcontent" name="bcontent" required="required"><br/>
     <div>

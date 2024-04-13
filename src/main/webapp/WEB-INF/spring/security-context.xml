@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                        https://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/security 
+                        https://www.springframework.org/schema/security/spring-security.xsd">
+    
+    <beans:bean id ="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+    <beans:bean id="loginService" class="org.kosa.mini.login.LoginService" />
+    <beans:bean id="authFailureHandler" class="org.kosa.mini.auth.handler.AuthFailureHandler" />
+    <beans:bean id="authSucessHandler" class="org.kosa.mini.auth.handler.AuthSucessHandler" />
+    <beans:bean id="csrfTokenRepository" class="org.springframework.security.web.csrf.CookieCsrfTokenRepository" p:cookieHttpOnly="false"/>
+    	
+    <http pattern="/resources/**" security="none"></http>
+    
+    <http auto-config="true" >
+    	<csrf token-repository-ref="csrfTokenRepository" />
+        <intercept-url pattern="/" access="permitAll()"/>
+        <intercept-url pattern="/login/loginForm" access="permitAll()"/>
+        <intercept-url pattern="/*/**" access="isAuthenticated()"/>
+        <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+        <!-- login-page="/login"  -> get방식으로 호출되는 URL -->
+        <!-- login-processing-url="/login" -> post방식으로 호출되는 URL -->
+        <form-login
+            login-page="/login/loginForm" 
+            login-processing-url="/login" 
+            username-parameter="member_id"
+            password-parameter="member_pwd" 
+            default-target-url="/"
+            authentication-failure-handler-ref="authFailureHandler"
+            authentication-success-handler-ref="authSucessHandler"
+             />
+	</http>
+
+    <authentication-manager>
+ 		<authentication-provider user-service-ref="loginService">
+            <password-encoder ref="bcryptPasswordEncoder"/>
+        </authentication-provider>
+    </authentication-manager>
+
+</beans:beans>

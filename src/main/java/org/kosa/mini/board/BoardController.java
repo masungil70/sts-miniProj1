@@ -13,6 +13,10 @@ import org.kosa.mini.code.CodeService;
 import org.kosa.mini.entity.BoardVO;
 import org.kosa.mini.entity.MemberVO;
 import org.kosa.mini.page.PageRequestVO;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -138,27 +142,21 @@ public class BoardController {
 	
 	@RequestMapping("insert")
 	@ResponseBody
-	public Object insert(@RequestBody BoardVO boardVO, HttpSession session) throws ServletException, IOException {
-		log.info("등록 {}", boardVO);
+	public Object insert(@RequestBody BoardVO boardVO, Authentication authentication) throws ServletException, IOException {
+		MemberVO loginVO = (MemberVO)authentication.getPrincipal();
+		log.info("등록 BoardVO = {}\n loginVO = {}", boardVO, loginVO);
+		
 		Map<String, Object> map = new HashMap<>();
 		map.put("status", -99);
-		map.put("statusMessage", "회원 가입이 실패하였습니다");
+		map.put("statusMessage", "게시물 등록에 실패하였습니다");
 		
-		//전처리로 세션정보를 얻는다
-		log.info("게시물등록시 sessionId = " + session.getId());
-		//로그인 사용자 설정 
-		MemberVO loginVO = (MemberVO) session.getAttribute("loginVO");
-		if (loginVO != null) {
-			//로그인한 사용자를 게시물 작성자로 설정한다 
-			boardVO.setMember_id(loginVO.getMember_id());
-			int updated = boardService.insert(boardVO);
-			if (updated == 1) { //성공
-				map.put("status", 0);
-			}
-		} else {
-			map.put("status", -98);
-			map.put("statusMessage", "로그인 정보가 존재하지 않습니다");
+		//로그인한 사용자를 게시물 작성자로 설정한다 
+		boardVO.setMember_id(loginVO.getMember_id());
+		int updated = boardService.insert(boardVO);
+		if (updated == 1) { //성공
+			map.put("status", 0);
 		}
+		
 		return map;
 	}
 	

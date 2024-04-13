@@ -1,10 +1,13 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 	<title>Home</title>
+    <%@ include file="/WEB-INF/views/include/meta.jsp" %>
     <%@ include file="/WEB-INF/views/include/css.jsp" %>
     <%@ include file="/WEB-INF/views/include/js.jsp" %>
 </head>
@@ -13,148 +16,33 @@
 <h1>
 	Hello world!
 </h1>
-	<a href="<c:url value='/member/loginForm'/>" >로그인 양식</a> <br/>
-	<a href="<c:url value='/board/list'/>" >게시물 목록</a> <br/>
 
-	<a href="javascript:json1()" >json1 호출</a> <br/>
-	<a href="javascript:json2()" >json2 호출</a> <br/>
-	<a href="javascript:json3()" >json3 호출</a> <br/>
-	<a href="javascript:json4()" >json4 호출</a> <br/>
-	<a href="javascript:json51()" >json51 호출</a> <br/>
-	<a href="javascript:json52()" >json52 호출</a> <br/>
-	<a href="javascript:jsonPath()" >json/abc 호출</a> <br/>
-	<a href="javascript:json10()" >json10 호출(200)</a> <br/>
-	<a href="javascript:json11()" >json11 호출(500에러)</a> <br/>
-	<hr>
-	<a href="javascript:all()" >board/all 호출</a> <br/>
-	<a href="javascript:findBoard()" >board/findBoard 호출</a> <br/>
-	<a href="javascript:addBoard()" >board/addBoard 호출</a> <br/>
-	<a href="javascript:updateBoard()" >board/updateBoard 호출</a> <br/>
-	<a href="javascript:deleteBoard()" >board/deleteBoard 호출</a> <br/>
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal" var="principal"/>
+</sec:authorize>
+
+<c:choose>
+	<c:when test="${empty principal}">
+		<ul class="navbar-nav">
+			<li class="nav-item"><a class="nav-link" href="<c:url value='/login/loginForm'/>">로그인</a></li>
+			<li class="nav-item"><a class="nav-link" href="<c:url value='/login/joinForm'/>">회원가입</a></li>
+		</ul>
+	</c:when>
+	<c:otherwise>
+		이름 : ${principal.member_name}
+		<ul class="navbar-nav">
+			<li class="nav-item"><a class="nav-link" href="<c:url value='/member/updateForm'/>">회원정보</a></li>
+			<li class="nav-item"><a class="nav-link" href="<c:url value='/login/logout'/>">로그아웃</a></li>
+			<li class="nav-item"><a class="nav-link" href="<c:url value='/board/list'/>">게시물 목록</a></li>
+		</ul>
+	</c:otherwise>
+</c:choose>
 
 <script>
 //회사 홈 페이지
 menuActive("home_link");
 
-function json1() {
-	myFetch("<c:url value='/json1'/>", {}, json => {
-		console.log("json1->", json);
-	})
-}
-
-function json2() {
-	myFetch("<c:url value='/json2'/>", {}, json => {
-		console.log("json2->", json);
-	})
-}
-
-function json3() {
-	myFetch("<c:url value='/json3'/>", {}, json => {
-		console.log("json3->", json);
-	})
-}
-
-function json4() {
-	myFetch("<c:url value='/json4'/>", {}, json => {
-		console.log("json4->", json);
-	})
-}
-
-function json51() {
-	myFetch("<c:url value='/json5'/>", {}, json => {
-		console.log("json5->", json);
-	})
-}
-
-function json52() {
-	myFetch("<c:url value='/json5'/>", {name:"이순신", age:30}, json => {
-		console.log("json5->", json);
-	})
-}
-
-function json10() {
-	myFetch("<c:url value='/json10'/>", {}, json => {
-		console.log("json10->", json);
-	})
-}
-
-function json11() {
-	myFetch("<c:url value='/json11'/>", {}, json => {
-		console.log("json11->", json);
-	})
-}
-
-function all(){
-	fetch("<c:url value='/board/all'/>", {
-		method:"GET",
-		headers : {"Content-type" : "application/json; charset=utf-8"}
-	}).then(res => res.json())
-	.then(json => {
-		//서버로 부터 받은 결과를 사용해서 처리 루틴 구현  
-		console.log("all", json);
-	}).catch(error => {
-	    console.error(`error: ${error.message}`);
-	});
-}
-
-function findBoard(){
-	fetch("<c:url value='/board/1004'/>", {
-		method:"GET",
-		headers : {"Content-type" : "application/json; charset=utf-8"}
-	}).then(res => res.json())
-	.then(json => {
-		//서버로 부터 받은 결과를 사용해서 처리 루틴 구현  
-		console.log("findBoard", json);
-	}).catch(error => {
-	    console.error(`error: ${error.message}`);
-	});
-}
-
-function addBoard(){
-	const param = JSON.stringify({writer:"홍길동", title:"제목", content:"내용"});
-	fetch("<c:url value='/board'/>", {
-			method:"POST",
-			body : param,
-			headers : {"Content-type" : "application/json; charset=utf-8"}
-	}).then(res => res.text())
-	.then(text => {
-		//서버로 부터 받은 결과를 사용해서 처리 루틴 구현  
-		console.log("text", text );
-	}).catch(error => {
-	    console.error(`error: ${error.message}`);
-	});
-}
-
-function updateBoard(){
-	const param = JSON.stringify({bno:"1004", writer:"홍길동", title:"제목", content:"내용"});
-	fetch("<c:url value='/board/1004'/>", {
-			method:"PUT",
-			body : param,
-			headers : {"Content-type" : "application/json; charset=utf-8"}
-	}).then(res => res.text())
-	.then(text => {
-		//서버로 부터 받은 결과를 사용해서 처리 루틴 구현  
-		console.log("text", text );
-	}).catch(error => {
-	    console.error(`error: ${error.message}`);
-	});
-}
-
-function deleteBoard(){
-	fetch("<c:url value='/board/1004'/>", {
-			method:"DELETE",
-			headers : {"Content-type" : "application/json; charset=utf-8"}
-	}).then(res => res.text())
-	.then(text => {
-		//서버로 부터 받은 결과를 사용해서 처리 루틴 구현  
-		console.log("text", text );
-	}).catch(error => {
-	    console.error(`error: ${error.message}`);
-	});
-}
-
 </script>
-<P>  The time on the server is ${serverTime}. </P>
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </body>
 </html>

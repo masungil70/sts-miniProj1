@@ -1,4 +1,4 @@
-package org.kosa.mini.member;
+package org.kosa.mini.member.admin;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,10 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/member")
-public class MemberController {
+@RequestMapping("/admin/member")
+public class AdminMemberController {
 
-	private final MemberService memberService;
+	private final AdminMemberService memberService;
 
 }
 

@@ -25,6 +25,10 @@
 	<logger name="org.kosa.mini">
 		<level value="debug" />
 	</logger>
+
+	<logger name="java.sql">
+		<level value="debug" />
+	</logger>
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">

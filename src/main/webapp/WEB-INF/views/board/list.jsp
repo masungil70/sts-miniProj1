@@ -2,22 +2,26 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%@ include file="/WEB-INF/views/include/meta.jsp" %>
     <%@ include file="/WEB-INF/views/include/css.jsp" %>
     <%@ include file="/WEB-INF/views/include/js.jsp" %>
 </head>
 <body>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
 </head>
+
 <body>
 	<h1>게시물목록</h1>
-	<h3>로그인 : ${loginVO.member_name} </h3>
+	<%-- 로그인 사용자 정보 출력 --%>
+	<h3>로그인 : ${principal.member_name} </h3>
     <form id="searchForm" action="list" method="post" >
+		<%-- csrf 토큰 설정 --%>
+		<sec:csrfInput/>
         <select id="size" name="size" >
         	<c:forEach var="size" items="${sizes}">
         		<option value="${size.codeid}" ${pageRequestVO.size == size.codeid ? 'selected' : ''} >${size.name}</option>
@@ -137,7 +141,10 @@ boardViewModel.addEventListener('shown.bs.modal', function (event) {
 	span_bwriter.innerText = "";
 	span_bdate.innerText = "";
 
-	myFetch("jsonBoardInfo", { bno : bno }, json => {
+	myFetch("jsonBoardInfo", {
+			${_csrf.parameterName} : "${_csrf.token}"
+			, bno : bno 
+		}, json => {
 		if(json.status == 0) {
 			//성공
 			const jsonBoard = json.jsonBoard; 
