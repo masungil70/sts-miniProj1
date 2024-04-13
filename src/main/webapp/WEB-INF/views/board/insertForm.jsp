@@ -9,6 +9,31 @@
     <%@ include file="/WEB-INF/views/include/meta.jsp" %>
     <%@ include file="/WEB-INF/views/include/css.jsp" %>
     <%@ include file="/WEB-INF/views/include/js.jsp" %>
+    <%-- 부트스트랩5 css --%>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <%-- ckeditor 관련 자바 스크립트  --%>
+	<script src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>
+	<script src="https://ckeditor.com/apps/ckfinder/3.5.0/ckfinder.js"></script>
+    <style type="text/css">
+    	#rForm {
+    		text-align:center;
+    	}
+	    .btitle {
+			width: 80%;
+			max-width: 800px;
+			margin: 0 auto;
+		}
+		
+	    .ck.ck-editor {
+			width: 80%;
+			max-width: 800px;
+			margin: 0 auto;
+		}
+		
+		.ck-editor__editable {
+			height: 80vh;
+		}
+    </style>
 </head>
 <body>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
@@ -22,11 +47,9 @@
     <form id="rForm" action="insert" method="post">
 		<%-- csrf 토큰 설정 --%>
 		<sec:csrfInput/>
-        <label>제목 : </label>
-        	<input style="width:90%;" type="text" id="btitle" name="btitle" required="required" placeholder="게시물 제목을 입력해주세요"><br/>
-        <label>내용 : </label>
-        	<textarea style="width:90%;height:300px" id="bcontent" name="bcontent" required="required" placeholder="게시물 내용을 입력해주세요">
-        	</textarea>
+        <input class="btitle" id="btitle" name="btitle" required="required" placeholder="게시물 제목을 입력해주세요"><br/>
+        <textarea id="bcontent" name="bcontent" required="required" placeholder="게시물 내용을 입력해주세요">
+        </textarea>
         <br/>
     <div>
         <input type="submit" value="등록">
@@ -36,7 +59,20 @@
     </form>
     
 <script type="text/javascript">
-menuActive("board_link");
+	//상단 메뉴에서 게시물이 선택되게 함  
+	menuActive("board_link");
+	
+	//cfeditor관련 설정 
+	let bcontent; //cfeditor의 객체를 저장하기 위한 변수 
+	ClassicEditor.create(document.querySelector('#bcontent'))
+	.then(editor => {
+		console.log('Editor was initialized');
+		//ckeditor객체를 전역변수 bcontent에 설정함 
+		window.bcontent = editor;
+	})
+	.catch(error => {
+		console.error(error);
+	});
 
     const rForm = document.getElementById("rForm");
     rForm.addEventListener("submit", e => {
