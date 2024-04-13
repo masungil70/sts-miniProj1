@@ -22,8 +22,12 @@
     <form id="rForm" action="insert" method="post">
 		<%-- csrf 토큰 설정 --%>
 		<sec:csrfInput/>
-        <label>제목 : </label><input type="text" id="btitle" name="btitle" required="required"><br/>
-        <label>내용 : </label><input type="text" id="bcontent" name="bcontent" required="required"><br/>
+        <label>제목 : </label>
+        	<input style="width:90%;" type="text" id="btitle" name="btitle" required="required" placeholder="게시물 제목을 입력해주세요"><br/>
+        <label>내용 : </label>
+        	<textarea style="width:90%;height:300px" id="bcontent" name="bcontent" required="required" placeholder="게시물 내용을 입력해주세요">
+        	</textarea>
+        <br/>
     <div>
         <input type="submit" value="등록">
         <a href="javascript:history(-1)">취소</a>
