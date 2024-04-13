@@ -62,6 +62,10 @@ public class BoardService {
 		BoardVO resultVO = boardMapper.view(board);
 		log.info(resultVO.getView_count());
 		log.info(resultVO.toString());
+		
+		//첨부파일을 얻는다 
+		resultVO.setBoardFileVO(boardFileMapper.getBoardFileVO(board));
+		
 		return resultVO;
 	}
 	

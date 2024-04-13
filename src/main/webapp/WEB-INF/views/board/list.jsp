@@ -87,6 +87,7 @@
 	      <label>ViewCount :</label><span id="view_count"></span><br/>
 	      <label>작성자 : </label><span id="bwriter"></span><br/>
 	      <label>작성일 : </label><span id="bdate"></span><br/>
+	      <label>첨부파일 : </label><span id="boardFile" data-board-file-no="" onclick="onBoardFileDownload(this)"></span><br/>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
@@ -140,6 +141,7 @@ boardViewModel.addEventListener('shown.bs.modal', function (event) {
 	span_view_count.innerText = "";
 	span_bwriter.innerText = "";
 	span_bdate.innerText = "";
+	boardFile.innerText = "";
 
 	myFetch("jsonBoardInfo", {
 			${_csrf.parameterName} : "${_csrf.token}"
@@ -154,6 +156,10 @@ boardViewModel.addEventListener('shown.bs.modal', function (event) {
 			span_view_count.innerText = jsonBoard.view_count;
 			span_bwriter.innerText = jsonBoard.bwriter;
 			span_bdate.innerText = jsonBoard.bdate;
+			//첨부파일명을 출력한다
+			boardFile.innerText = jsonBoard.boardFileVO.original_filename;
+			//첨부파일의 번호를 설정한다 
+			boardFile.setAttribute("data-board-file-no", jsonBoard.boardFileVO.board_file_id);
 			
 		} else {
 			alert(json.statusMessage);
@@ -162,6 +168,10 @@ boardViewModel.addEventListener('shown.bs.modal', function (event) {
 
 })
 	
+const onBoardFileDownload = boardFile => {
+	alert("첨부파일 번호 = " + boardFile.getAttribute("data-board-file-no"));	
+}
+
 function jsView(bno) {
 	//인자의 값을 설정한다 
 //	bno.value = bno;

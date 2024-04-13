@@ -12,6 +12,7 @@ public interface BoardFileMapper {
 
 	List<BoardFileVO> getList(BoardVO boardVO);
 	BoardFileVO view(BoardFileVO boardFileVO);
+	BoardFileVO getBoardFileVO(BoardVO boardVO);
 	int delete(BoardFileVO boardFileVO);
 	int insert(BoardFileVO boardFileVO);
 

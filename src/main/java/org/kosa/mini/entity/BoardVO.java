@@ -21,7 +21,10 @@ public class BoardVO {
 	private String view_count;
 	private String bwriter;
 	
-	//첨부파일 
+	//업로드 파일 
 	private MultipartFile file;
+
+	//첨부파일 
+	private BoardFileVO boardFileVO; 
 	
 }
