@@ -158,6 +158,13 @@ public class BoardController {
 		return "board/insertForm";
 	}
 	
+	// 만약 게시글 작성 중 서버에 이미지를 업로드한 후 작성중인 게시글을 저장하지 않고 
+	// 취소 하고 나가는 경우 업로드한 이미지가 존재하게 된다 
+	// 이런 경우 발생하면 서버에 의미 없는 업로드된 이미지가 존재하게 된다  
+	// token 값은 시작시 발급 받고, 상태는 임시 작업 상태(0)임 
+	// 게시물 등록 작업이 완료되면 token의 상태를 작업 완료(1)로 설정해야한다  
+	// 만약 마지막 작업이 완료 되지 않은 경우 스토리지 서버에 저장된 파일을 
+	// 삭제 할 수 있게 구현 해야 한다(현재는 사용하지 않음)
 	@RequestMapping("insert")
 	@ResponseBody
 	public Object insert(BoardVO boardVO, Authentication authentication) throws ServletException, IOException {
@@ -177,7 +184,6 @@ public class BoardController {
 		
 		return map;
 	}
-	
 	
 	@PostMapping("boardImageUpload")
 	@ResponseBody

@@ -45,6 +45,8 @@
 	<h3>로그인 : ${principal.member_name} </h3>
     
     <form id="rForm" action="insert" method="post" enctype="multipart/form-data">
+    	<!-- 게시물 토큰을 설정한다 -->
+        <input type="hidden" id="board_token" name="board_token" value="${board_token}"><br/>
         <input class="btitle" id="btitle" name="btitle" required="required" placeholder="게시물 제목을 입력해주세요"><br/>
         <textarea id="bcontent" name="bcontent" required="required" placeholder="게시물 내용을 입력해주세요">
         </textarea>

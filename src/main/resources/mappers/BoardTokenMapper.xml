@@ -23,9 +23,9 @@ ENGINE=InnoDB
 		) 
 	</insert>
 	
-	<update id="updateStatus" >
+	<update id="updateStatusComplate" >
 		update tb_board_token set
-			 status = #{status}
+			 status = 1
 		where board_token = #{board_token}	
 	</update>
 	
