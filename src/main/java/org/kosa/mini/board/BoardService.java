@@ -1,12 +1,15 @@
 package org.kosa.mini.board;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
 import org.kosa.mini.entity.BoardFileVO;
+import org.kosa.mini.entity.BoardImageFileVO;
+import org.kosa.mini.entity.BoardTokenVO;
 import org.kosa.mini.entity.BoardVO;
 import org.kosa.mini.page.PageRequestVO;
 import org.kosa.mini.page.PageResponseVO;
@@ -31,7 +34,9 @@ public class BoardService {
 	private final String CURR_IMAGE_REPO_PATH = "c:\\upload";
 	private final BoardMapper  boardMapper;
 	private final BoardFileMapper  boardFileMapper;
-	
+	private final BoardTokenMapper  boardTokenMapper;
+	private final BoardImageFileMapper  boardImageFileMapper;
+
 	//날자 서식을 생성한다
 	private final SimpleDateFormat date_format = new SimpleDateFormat(File.separator + "YYYY" + File.separator + "MM" + File.separator + "dd");
 
@@ -137,6 +142,65 @@ public class BoardService {
 	public BoardFileVO getBoardFile(int board_file_no) {
 		return boardFileMapper.getBoardFile(board_file_no);
 	}
+	
+	
+	public String getBoardToken() {
+		final String board_token = UUID.randomUUID().toString(); 
+		
+		boardTokenMapper.insert(board_token);
+		
+		return board_token;
+	}
+	
+	public int updateUseStatus(String board_token) {
+		BoardTokenVO boardTokenVO = BoardTokenVO.builder().board_token(board_token).status(1).build();
+		
+		return boardTokenMapper.updateStatus(boardTokenVO);
+	}
+
+	public String boardImageFileUpload(String board_token, MultipartFile file) {
+		Calendar now = Calendar.getInstance();
+		//저장위치를 오늘의 날짜로 한다
+		String realFolder = date_format.format(now.getTime());
+		//실제 저장 위치를 생성한다
+		File realPath = new File(CURR_IMAGE_REPO_PATH + realFolder);
+		//오늘 날짜에 대한 폴더가 없으면 생성한다  
+		if(!realPath.exists()) {
+			realPath.mkdirs();
+		}
+		//실제 파일명으로 사용할 이름을 생성한다  
+		String fileNameReal = UUID.randomUUID().toString();
+		File realFile = new File(realPath, fileNameReal);
+		
+		//파일을 실제 위치에 저장한다 
+		try {
+			file.transferTo(realFile);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.info("transferTo : ", e);
+			return null;
+		}
+
+		//게시물에 내용에 추가되는 이미지 파일 객체를 생성한다 
+		BoardImageFileVO boardImageFileVO = BoardImageFileVO.builder()
+				.board_token(board_token)
+				.content_type(file.getContentType())
+				.original_filename(file.getOriginalFilename())
+				.real_filename(realFile.getAbsolutePath())
+				.size(file.getSize())
+				.build(); 
+
+		//게시물에 내용에 추가되는 이미지 파일을 DB에 저장한다 
+		boardImageFileMapper.insert(boardImageFileVO);
+		
+		return boardImageFileVO.getBoard_image_file_id();		
+	}
+	
+	public BoardImageFileVO getBoardImageFile(String board_image_file_id) {
+		return boardImageFileMapper.findById(board_image_file_id);
+	}
+	
+	
 }
 
 
