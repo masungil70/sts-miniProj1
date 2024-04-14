@@ -19,5 +19,12 @@ public interface BoardImageFileMapper {
 
 	//스케줄러에서 임시 파일 삭제을 삭제한다  
 	public int deleteBoardToken(Map<String, Object> map);
-
+	
+	//게시물 완료 시 token관련 첨부 파일 목록을 얻는다  
+	public List<BoardImageFileVO> getBoardImages(String board_token);
+	
+	//게시물 완료 시 임시 파일 삭제을 삭제한다  
+	public int deleteBoardImageFiles(Map<String, Object> map);
+	
+	
 }

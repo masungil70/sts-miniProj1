@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.kosa.mini.entity.BoardFileVO;
 import org.kosa.mini.entity.BoardImageFileVO;
@@ -103,7 +106,35 @@ public class BoardService {
 		//board_token의 상태를 임시 상태에서 완료 상태로 변경한다
 		boardTokenMapper.updateStatusComplate(board.getBoard_token());
 		
-		//게시물 이미지의 board_token 값인 자료를 bno로 변경한다
+		//실제 게시물 내용에 사용된 이미지만 게시물 이미지의 board_token 값을 bno로 변경한다
+		//게시물 내용 중 사용하다 삭제한 이미지는 삭제 처리해야 한다.
+		//1. board_token의 값에 대한 이미지 목록을 얻는다
+		//2. 게시물 내용 중 이미지가 사용중이 아니면 삭제 목록에 추가함 
+		//3. 삭제 목록에 있는 이미지를 (파일 및 DB)삭제 한다
+		//4. 게시물 이미지의 board_token 값을 bno로 변경한다
+		
+		String bcontent = board.getBcontent();
+		//파일 다운로드  URL을 구성한다
+		final String imageURL = "/board/image/";
+		
+		//1. board_token의 값에 대한 이미지 목록을 얻는다
+		List<BoardImageFileVO> boardImageFiles = boardImageFileMapper.getBoardImages(board.getBoard_token());
+		
+		//2. 게시물 내용 중 이미지가 사용중이 아니면 삭제 목록에 추가함 
+		List<BoardImageFileVO> deleteImageList = boardImageFiles.stream().filter(
+				//게시물 내용에 해당 이미지가 존재하지 않으면 삭제 대상임 
+				fileUpload -> !bcontent.contains(imageURL + fileUpload.getBoard_image_file_id())
+			).collect(Collectors.toList());
+
+		//3. 삭제 목록에 있는 이미지를 (파일)삭제 한다
+		deleteImageList.stream().forEach(boardImageFile -> new File(boardImageFile.getReal_filename()).delete());
+		
+		//3. 삭제 목록에 있는 이미지를 (DB)삭제 한다
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", deleteImageList);
+		boardImageFileMapper.deleteBoardImageFiles(map);
+		
+		//4. 게시물 이미지의 board_token 값을 bno로 변경한다
 		boardImageFileMapper.updateBoardNo(board);
 		
 		return result;
