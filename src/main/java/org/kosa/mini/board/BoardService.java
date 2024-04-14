@@ -9,7 +9,6 @@ import java.util.UUID;
 
 import org.kosa.mini.entity.BoardFileVO;
 import org.kosa.mini.entity.BoardImageFileVO;
-import org.kosa.mini.entity.BoardTokenVO;
 import org.kosa.mini.entity.BoardVO;
 import org.kosa.mini.page.PageRequestVO;
 import org.kosa.mini.page.PageResponseVO;

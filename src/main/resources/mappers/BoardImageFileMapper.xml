@@ -60,5 +60,23 @@ ENGINE=InnoDB
 		where board_token = #{board_token}	
 	</update>	
 	
+	<select id="getBoardImageFileList" resultType="BoardImageFileVO">
+		select
+			*
+		from tb_board_image_file  
+		where board_token in 
+		<foreach collection="list" item="item" open="(" separator="," close=")" >
+			#{item.board_token}
+		</foreach> 
+	</select>
+	
+	    
+	<delete id="deleteBoardToken" >
+		delete from tb_board_image_file  
+		where board_token in 
+		<foreach collection="list" item="item" open="(" separator="," close=")" >
+			#{item.board_token}
+		</foreach> 
+	</delete>
 	    
 </mapper>
