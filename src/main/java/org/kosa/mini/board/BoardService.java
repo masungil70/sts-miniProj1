@@ -126,13 +126,15 @@ public class BoardService {
 				fileUpload -> !bcontent.contains(imageURL + fileUpload.getBoard_image_file_id())
 			).collect(Collectors.toList());
 
-		//3. 삭제 목록에 있는 이미지를 (파일)삭제 한다
-		deleteImageList.stream().forEach(boardImageFile -> new File(boardImageFile.getReal_filename()).delete());
-		
-		//3. 삭제 목록에 있는 이미지를 (DB)삭제 한다
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", deleteImageList);
-		boardImageFileMapper.deleteBoardImageFiles(map);
+		if (deleteImageList.size() != 0) {
+			//3. 삭제 목록에 있는 이미지를 (파일)삭제 한다
+			deleteImageList.stream().forEach(boardImageFile -> new File(boardImageFile.getReal_filename()).delete());
+			
+			//3. 삭제 목록에 있는 이미지를 (DB)삭제 한다
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("list", deleteImageList);
+			boardImageFileMapper.deleteBoardImageFiles(map);
+		}
 		
 		//4. 게시물 이미지의 board_token 값을 bno로 변경한다
 		boardImageFileMapper.updateBoardNo(board);
