@@ -9,15 +9,19 @@ import org.kosa.mini.board.BoardImageFileMapper;
 import org.kosa.mini.board.BoardTokenMapper;
 import org.kosa.mini.entity.BoardImageFileVO;
 import org.kosa.mini.entity.BoardTokenVO;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Service
+@Component
 @RequiredArgsConstructor
 @Slf4j
+@EnableScheduling
 public class SchedulerService {
 	private final BoardTokenMapper  	 boardTokenMapper;
 	private final BoardImageFileMapper  boardImageFileMapper;
@@ -25,7 +29,7 @@ public class SchedulerService {
 	
 	@Scheduled(fixedDelay = 60000) // 60초마다 실행
 	public void run2() {
-		System.out.println("60초마다 실행");
+		log.info("60초마다 실행");
 	}
 	
 	//Cron 표현식을 사용하여 작업을 예약할 수 있다.
@@ -51,55 +55,55 @@ public class SchedulerService {
 	// 매일 오전 04시에 실행
 	@Scheduled(cron = "0 0 04 * * *") 
 	public void run3() {
-		System.out.println("매일 오전 04시에 실행");
+		log.info("매일 오전 04시에 실행");
 	}
 	 
 	// 매달 10일,20일 04시에 실행
 	@Scheduled(cron = "0 0 04 10,20 * ?") 
 	public void run4() {
-		System.out.println("매달 10일,20일 04시에 실행");
+		log.info("매달 10일,20일 04시에 실행");
 	}
 	 
 	// 매달 마지막날 04시에 실행
 	@Scheduled(cron = "0 0 04 L * ?") 
 	public void run5() {
-		System.out.println("매달 마지막날 04시에 실행");
+		log.info("매달 마지막날 04시에 실행");
 	}
 	 
 	// 1시간 마다 실행 ex) 01:00, 02:00, 03:00 ...
 	@Scheduled(cron = "0 0 0/1 * * *") 
 	public void run6() {
-		System.out.println("1시간 마다 실행");
+		log.info("1시간 마다 실행");
 	}
 	 
 	// 매일 9시00분-9시55분, 18시00분-18시55분 사이에 5분 간격으로 실행
 	@Scheduled(cron = "0 0/5 9,18 * * *") 
 	public void run7() {
-		System.out.println("매일 9시00분-9시55분, 18시00분-18시55분 사이에 5분 간격으로 실행");
+		log.info("매일 9시00분-9시55분, 18시00분-18시55분 사이에 5분 간격으로 실행");
 	}
 	 
 	// 매일 9시00분-18시55분 사이에 5분 간격으로 실행
 	@Scheduled(cron = "0 0/5 9-18 * * *") 
 	public void run8() {
-		System.out.println("매일 9시00분-18시55분 사이에 5분 간격으로 실행");
+		log.info("매일 9시00분-18시55분 사이에 5분 간격으로 실행");
 	}
 	 
 	// 매달 1일 10시30분에 실행
 	@Scheduled(cron = "0 30 10 1 * *") 
 	public void run9() {
-		System.out.println("// 매달 1일 10시30분에 실행");
+		log.info("// 매달 1일 10시30분에 실행");
 	}
 	 
 	// 매년 3월내 월-금 04시30분에 실행
 	@Scheduled(cron = "0 30 04 ? 3 1-5") 
 	public void run10() {
-		System.out.println("매년 3월내 월-금 04시30분에 실행");
+		log.info("매년 3월내 월-금 04시30분에 실행");
 	}
 	 
 	// 매달 마지막 토요일 10시30분에 실행
 	@Scheduled(cron = "0 30 10 ? * 6L") 
 	public void run11() {
-		System.out.println("매달 마지막 토요일 10시30분에 실행");
+		log.info("매달 마지막 토요일 10시30분에 실행");
 	}
 	
 	@Scheduled(fixedDelay = 60000) // 60초마다 실행 

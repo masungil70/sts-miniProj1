@@ -43,8 +43,10 @@ handler : 서버에서 결과를 전달해주면 받아서 처리하는 함수
 
 const myFetch = (url, formId, handler) => {
 	const param = typeof formId == "string" ? formToSerialize(formId) : JSON.stringify(formId);
-	const csrfToken = document.querySelector("meta[name='_csrf']").content;
-	const csrfHeader = document.querySelector("meta[name='_csrf_header']").content;
+	const csrf = document.querySelector("meta[name='_csrf']");
+	const csrf_header = document.querySelector("meta[name='_csrf_header']");
+	const csrfToken = csrf ? csrf.content : null;
+	const csrfHeader = csrf_header ? csrf_header.content : null;
 	const headers = {"Content-type" : "application/json; charset=utf-8"};
 	if (csrfToken) {
 		headers[csrfHeader] = csrfToken 
