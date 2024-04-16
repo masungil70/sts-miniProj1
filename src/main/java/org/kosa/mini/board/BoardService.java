@@ -16,6 +16,7 @@ import org.kosa.mini.entity.BoardVO;
 import org.kosa.mini.page.PageRequestVO;
 import org.kosa.mini.page.PageResponseVO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
@@ -59,6 +60,7 @@ public class BoardService {
         return pageResponseVO;
 	}
 	
+    @Transactional
 	public BoardVO view(BoardVO board)  {
 		//view Count의 값을 증가한다. 
 		//만약 값을 증가 하지 못하면 게시물이 존재하지 않는 경우임  
@@ -76,6 +78,7 @@ public class BoardService {
 		return resultVO;
 	}
 	
+    @Transactional
 	public int delete(BoardVO board)  {
 		return boardMapper.delete(board);
 	}
@@ -85,10 +88,12 @@ public class BoardService {
 		return boardMapper.view(board);
 	}
 	
+    @Transactional
 	public int update(BoardVO board) {
 		return boardMapper.update(board);
 	}
 	
+    @Transactional
 	public int insert(BoardVO board)  {
 		//게시물 등록시 게시물의 번호를 얻는다  
 		int result = boardMapper.insert(board);
